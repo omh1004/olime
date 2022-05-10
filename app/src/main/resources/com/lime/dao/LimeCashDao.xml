@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.lime.dao.LimeCashDao">
+
+<resultMap type="LimeCash" id="cashMap"></resultMap>
+
+<insert id="insertUse" parameterType="LimeCash" keyProperty="limeId" keyColumn="lime_id" useGeneratedKeys="true">
+    INSERT INTO lime_cash(user_id, amt, type_use, used)
+    VALUE       (#{userId},#{amt},#{typeUse}, #{used})
+</insert>
+
+
+<insert id="checkout" parameterType="LimeCash" keyProperty="limeId" keyColumn="lime_id" useGeneratedKeys="true">
+    INSERT INTO lime_cash(user_id, amt, type_use, used)
+    VALUE       (#{userId},#{amt},#{typeUse},#{used})
+</insert>
+
+
+<select id="findCash" parameterType="int" resultType="int">
+    SELECT IFNULL(sum(A.cal_amt), 0)
+    FROM   (SELECT CASE WHEN type_use='C'
+                        THEN amt
+                        WHEN type_use='U'
+                        THEN -amt
+                        ELSE 0
+                    END AS   cal_amt
+            FROM    lime_cash
+            WHERE   user_id=#{userId}) AS A
+</select>
+
+<insert id="insertCash" parameterType="LimeCash">
+    INSERT INTO lime_cash(user_id, amt, type_use, merchant_uid, imp_uid)
+    VALUE       (#{userId}, #{amt}, 'C', #{merchantUid}, #{impUid})
+</insert>
+
+<select id="findByUserId" resultMap="cashMap">
+    select 
+      lime_id,
+      user_id,
+      date myDate,
+      type_use,
+      amt,
+      used
+    from lime_cash
+    where
+     user_id=#{userId}
+    order by 
+      lime_id desc
+</select>
+
+</mapper>

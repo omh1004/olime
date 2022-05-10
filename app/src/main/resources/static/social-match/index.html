@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta
+            name="author"
+            content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.88.1"/>
+    <title>라임</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+            rel="stylesheet"
+            href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+
+    <link
+            href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css"
+            rel="stylesheet"
+    />
+    <link
+            href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css"
+            rel="stylesheet"
+    />
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <!-- <link rel="stylesheet" href="../header/user/u-adminHeader.css"> -->
+    <link href="index.css" rel="stylesheet"/>
+
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#x-header").load("/header/user/header.html"); //헤더 인클루드
+            $("#x-footer").load("/footer/footer.html");
+        });
+    </script>
+
+    <script src="import.js" type="module"></script>
+</head>
+
+<body>
+<div id="x-header" class="d-flex bd-highlight"></div>
+
+<main class="social-match mb-5" id="match-wrapper">
+    <div id="position-div" class="sticky-top">
+        <div id="dateNav" class="mb-3">
+            <div id="navWrap">
+                <ul class="list-group date-ul">
+                    <button class="btn btn-primary disabled" id="prev-btn">
+                        <img src="arrow.png" alt=""/>
+                    </button>
+                    <div class="date-div" id="date-div-1">
+                        <li class="list-group-item date-li active">
+                            <a id="date-0"></a>
+                        </li>
+                        <li class="list-group-item date-li"><a id="date-1"></a></li>
+                        <li class="list-group-item date-li"><a id="date-2"></a></li>
+                        <li class="list-group-item date-li"><a id="date-3"></a></li>
+                        <li class="list-group-item date-li"><a id="date-4"></a></li>
+                        <li class="list-group-item date-li"><a id="date-5"></a></li>
+                        <li class="list-group-item date-li"><a id="date-6"></a></li>
+                        <li class="list-group-item"><a></a></li>
+                        <li class="list-group-item date-li"><a id="date-7"></a></li>
+                        <li class="list-group-item date-li"><a id="date-8"></a></li>
+                        <li class="list-group-item date-li"><a id="date-9"></a></li>
+                        <li class="list-group-item date-li"><a id="date-10"></a></li>
+                        <li class="list-group-item date-li"><a id="date-11"></a></li>
+                        <li class="list-group-item date-li"><a id="date-12"></a></li>
+                        <li class="list-group-item date-li"><a id="date-13"></a></li>
+                    </div>
+                    <button class="btn btn-primary" id="next-btn">
+                        <img src="arrow.png" alt=""/>
+                    </button>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex w-100">
+            <select
+                    class="form-select"
+                    aria-label="region"
+                    name="region"
+                    id="drop-region"
+            >
+                <option value="0" selected>지역</option>
+                <option value="1">서울</option>
+                <option value="2">부산</option>
+                <option value="3">대구</option>
+                <option value="4">인천</option>
+                <option value="5">광주</option>
+                <option value="6">대전</option>
+                <option value="7">울산</option>
+                <option value="8">세종</option>
+                <option value="9">경기</option>
+                <option value="10">강원</option>
+                <option value="11">충청북도</option>
+                <option value="12">충청남도</option>
+                <option value="13">전라북도</option>
+                <option value="14">전라남도</option>
+                <option value="15">경상북도</option>
+                <option value="16">경상남도</option>
+                <option value="17">제주</option>
+                <!-- <option value="1">모든 지역</option>
+              <option value="2">서울</option>
+              <option value="3">경기/강원</option>
+              <option value="4">인천</option>
+              <option value="5">대전/세종/충청</option>
+              <option value="6">대구/경북</option>
+              <option value="7">부산/울산/경남</option>
+              <option value="8">광주/전라</option>
+              <option value="9">제주</option> -->
+            </select>
+            <select
+                    class="form-select"
+                    aria-label="city"
+                    name="city"
+                    id="drop-city"
+            >
+                <option selected>도시</option>
+                <!-- <option value="1">서귀포시</option> -->
+            </select>
+            <select
+                    class="form-select"
+                    aria-label="level"
+                    name="level"
+                    id="levelNo"
+            >
+                <option value="0" selected>레벨</option>
+                <option value="1">모든 레벨</option>
+                <option value="2">BEGINNER</option>
+                <option value="3">INTERMEDIATE</option>
+                <option value="4">ADVANCED</option>
+                <option value="5">PRO</option>
+            </select>
+            <select
+                    class="form-select"
+                    aria-label="gender"
+                    name="matchType"
+                    id="matchType"
+            >
+                <option value="0" selected>성별</option>
+                <option value="1">남자</option>
+                <option value="2">여자</option>
+                <option value="3">남녀모두</option>
+            </select>
+            <select
+                    class="form-select"
+                    aria-label="court-type"
+                    name="courtType"
+                    id="courtType"
+            >
+                <option value="0" selected>코트</option>
+                <option value="1">하드</option>
+                <option value="2">클레이</option>
+                <option value="3">잔디</option>
+                <option value="4">앙투카</option>
+            </select>
+        </div>
+        <div id="my-preferred">
+            <input
+                    type="checkbox"
+                    value=""
+                    name="my-preferred"
+                    id="my-preferred-checkbox"
+                    class="form-check-input"
+            />
+            <!-- &nbsp;&nbsp;내 선호 -->
+            <span>&nbsp;&nbsp;내 선호</span>
+        </div>
+        <!-- <select class="form-select" aria-label="my-preferred" name="" id="preferred">
+        <option selected>내 선호</option>
+      </select> -->
+    </div>
+
+    <ul class="list-group list-group-flush match-list"></ul>
+</main>
+
+<div id="x-footer"></div>
+
+<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="./index.js"></script>
+</body>
+</html>

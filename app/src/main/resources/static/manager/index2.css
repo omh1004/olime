@@ -1,0 +1,97 @@
+
+
+
+.container-fluid {
+    max-width: 1024px;
+}
+
+
+#submit-btn {
+    background-color: rgb(102, 200, 141);
+    color: #fff;
+    font-size: 20px;
+}
+
+/* 매치 정보 */
+#match-info {
+    background-color: rgba(203, 203, 203, 0.2);
+    border-radius: 10px;
+}
+
+.match-info {
+    color: rgb(127, 127, 127);
+}
+
+.u-level {
+    height: 20px;
+}
+
+#team-btn {
+    width: 120px;
+    border: 1px solid #66c88d;
+    color: #6c757d;
+}
+#team-btn:hover,
+#team-btn:focus {
+    box-shadow: 0 0 0 0.25rem rgb(102 200 141 / 25%);
+}
+#team-btn:focus {
+    background-color: #66c88d;
+    color: #fff;
+}
+
+.x-team {
+    font-size: 20px;
+    font-weight: bolder;
+    line-height: 6vh;
+    height: 6vh;
+}
+
+#x-red {
+    background: #bb2d3b;
+    color: #fff;
+}
+#x-yellow {
+    background-color: #ffca2c;
+}
+
+.eval-btn {
+    height: 20px;
+    width: 70px;
+    align-self: center;
+    line-height: 8px;
+}
+
+/*  모달  */
+img {
+    width: 40px;
+    height: 40px;
+}
+
+.point-form > .btn {
+    background-color: rgb(230, 230, 230);
+    color: rgb(131, 131, 131);
+    margin: 0.5rem 0.2rem;
+    border-radius: 50px;
+    padding: 0.1rem 0.9rem;
+}
+
+.point-form > .btn:hover {
+    box-shadow: 0 0 0 0.25rem rgb(102 200 141 / 25%);
+}
+
+.point-chk:checked + label.btn {
+    box-shadow: none;
+    background-color: #66c88d;
+    color: #fff;
+}
+
+.save-btn {
+    background-color: #66c88d;
+    color: #fff;
+}
+
+.save-btn:hover {
+    box-shadow: 0 0 0 0.25rem rgb(102 200 141 / 25%);
+    color: #fff;
+}

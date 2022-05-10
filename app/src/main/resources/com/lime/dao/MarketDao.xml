@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  namespace = "인터페이스의 패키지 및 이름"과 일치해야 한다.
+ -->
+<mapper namespace="com.lime.dao.MarketDao">
+
+  <!--  테이블의 컬럼과 객체 필드를 연결한다. -->
+  <resultMap type="market" id="marketMap">
+    <id column="item_id" property="itemId"/>
+    <result column="user_id" property="userId"/>
+    <result column="item_name" property="itemName"/>
+    <result column="item_cost" property="itemCost"/>
+    <result column="content" property="content"/>
+    <result column="rgt_date" property="rgtDate"/>
+    <result column="mdfy_date" property="mdfyDate"/>
+    <result column="trans_state" property="transState"/>
+    <result column="view_cnt" property="viewCount"/>
+    <result column="region_name" property="regionName"/>
+    <result column="city_name" property="cityName"/>
+    <result column="name" property="userName"/>
+    <result column="manner_score" property="mannerScore"/>
+    <result column="lv_name" property="lvName"/>
+    
+    <association property="writer" javaType="User">
+      <id column="user_id" property="userId"/>
+      <result column="name" property="name"/>
+    </association>
+    
+    <collection property="photo" ofType="ItemImage">
+      <id column="item_img_id" property="imgId"/>
+      <result column="file_path" property="filePath"/>
+    </collection>
+    
+  </resultMap>
+  
+  
+  <!-- 
+    id => 인터페이스의 메서드 이름과 일치해야 한다.
+   -->
+  <select id="findAll" resultMap="marketMap">
+SELECT 
+      i.user_id as user_id,
+      i.item_id as item_id,
+      i.item_name as item_name,
+      i.item_cost as item_cost,
+      rg.region_name as region_name,
+      ct.city_id as city_id,
+      ct.city_name as city_name,
+      i.view_cnt as view_cnt,
+      i.rgt_date as rgt_date,
+      i.trans_state as trans_state,
+      ii.file_path as file_path,
+      ii.item_img_id
+   FROM item i
+   LEFT JOIN city ct
+   ON i.city_id = ct.city_id
+   LEFT JOIN region rg 
+   ON ct.region_id = rg.region_id
+   LEFT JOIN item_img ii 
+   ON i.item_id = ii.item_id
+   WHERE i.item_name like concat('%',#{keyword},'%')
+   order by rgt_date desc
+   
+   </select>
+   
+   <select id="findByRegion" resultMap="marketMap">
+		SELECT 
+		      i.item_id as item_id,
+		      i.item_name as item_name,
+		      i.item_cost as item_cost,
+		      replace(rg.region_name, '\r', '') as region_name,
+		      replace(ct.city_name, '\r', '') as city_name,
+		      i.view_cnt as view_cnt,
+		      i.rgt_date as rgt_date,
+		      i.trans_state as trans_state,
+		      ii.file_path as file_path,
+          ii.item_img_id
+		FROM item i
+		  LEFT JOIN city ct
+		   ON i.city_id = ct.city_id
+		  LEFT JOIN region rg 
+		   ON ct.region_id = rg.region_id
+		  LEFT JOIN item_img ii 
+       ON i.item_id = ii.item_id
+		where region_name=#{regionName} AND i.item_name like concat('%',#{keyword},'%')
+		   order by rgt_date desc
+
+    </select>
+    
+    <select id="findByCity" resultMap="marketMap" resultType="string">
+    SELECT 
+          i.item_id as item_id,
+          i.item_name as item_name,
+          i.item_cost as item_cost,
+          replace(rg.region_name, '\r', '') as region_name,
+          replace(ct.city_name, '\r', '') as city_name,
+          i.view_cnt as view_cnt,
+          i.rgt_date as rgt_date,
+          i.trans_state as trans_state,
+          ii.file_path as file_path,
+          ii.item_img_id
+    FROM item i
+      LEFT JOIN city ct
+       ON i.city_id = ct.city_id
+      LEFT JOIN region rg 
+       ON ct.region_id = rg.region_id
+      LEFT JOIN item_img ii 
+       ON i.item_id = ii.item_id
+    where region_name=#{regionName} AND city_name=#{cityName} AND i.item_name like concat('%',#{keyword},'%')
+       order by rgt_date desc
+
+    </select>
+    
+    <select id="findAllChecked" resultMap="marketMap">
+SELECT 
+      i.item_id as item_id,
+      i.item_name as item_name,
+      i.item_cost as item_cost,
+      rg.region_name as region_name,
+      ct.city_name as city_name,
+      i.view_cnt as view_cnt,
+      i.rgt_date as rgt_date,
+      i.trans_state as trans_state,
+      ii.file_path as file_path,
+      ii.item_img_id
+   FROM item i
+   LEFT JOIN city ct
+    ON i.city_id = ct.city_id
+   LEFT JOIN region rg 
+    ON ct.region_id = rg.region_id
+   LEFT JOIN item_img ii 
+    ON i.item_id = ii.item_id
+   where trans_state="S" AND i.item_name like concat('%',#{keyword},'%')
+   order by rgt_date desc
+   
+   </select>
+    
+    <select id="findByRegionChecked" resultMap="marketMap">
+    SELECT 
+          i.item_id as item_id,
+          i.item_name as item_name,
+          i.item_cost as item_cost,
+          replace(rg.region_name, '\r', '') as region_name,
+          replace(ct.city_name, '\r', '') as city_name,
+          i.view_cnt as view_cnt,
+          i.rgt_date as rgt_date,
+          i.trans_state as trans_state,
+          ii.file_path as file_path,
+          ii.item_img_id
+    FROM item i
+      LEFT JOIN city ct
+       ON i.city_id = ct.city_id
+      LEFT JOIN region rg 
+       ON ct.region_id = rg.region_id
+      LEFT JOIN item_img ii 
+       ON i.item_id = ii.item_id
+    where region_name=#{regionName} AND trans_state="S" AND i.item_name like concat('%',#{keyword},'%')
+       order by rgt_date desc
+
+    </select>
+    
+    <select id="findByCityChecked" resultMap="marketMap" resultType="string">
+    SELECT 
+          i.item_id as item_id,
+          i.item_name as item_name,
+          i.item_cost as item_cost,
+          replace(rg.region_name, '\r', '') as region_name,
+          replace(ct.city_name, '\r', '') as city_name,
+          i.view_cnt as view_cnt,
+          i.rgt_date as rgt_date,
+          i.trans_state as trans_state,
+          ii.file_path as file_path,
+          ii.item_img_id
+    FROM item i
+      LEFT JOIN city ct
+       ON i.city_id = ct.city_id
+      LEFT JOIN region rg 
+       ON ct.region_id = rg.region_id
+      LEFT JOIN item_img ii 
+       ON i.item_id = ii.item_id
+    where region_name=#{regionName} AND city_name=#{cityName} AND trans_state="S" AND i.item_name like concat('%',#{keyword},'%')
+       order by rgt_date desc
+
+    </select>
+    
+    <select id="findByNo" resultMap="marketMap" parameterType="int">
+	  select
+	   i.item_id,
+	   i.item_name,
+	   i.item_cost,
+	   i.trans_state,
+	   rg.region_name,
+	   ct.city_name,
+	   i.view_cnt,
+	   i.rgt_date,
+	   i.content,
+	   u.user_id,
+	   u.name,
+	   m.manner_score,
+     lv.lv_name,
+     ii.file_path,
+     ii.item_img_id,
+     (SELECT 
+           COUNT(*) 
+      FROM item_like 
+      WHERE item_id = il.item_id ) like_count
+	  from item i
+	   left join city ct
+	     on i.city_id = ct.city_id
+	   left join region rg
+	     on ct.region_id = rg.region_id
+	   left join user u
+	     on i.user_id = u.user_id
+	   left join member m
+       on i.user_id = m.user_id 
+     left join lv
+       on m.lv_id  = lv.lv_id
+     left join item_img ii
+       on i.item_id = ii.item_id
+     LEFT join item_like il 
+       on i.item_id = il.item_id
+	  where i.item_id=#{no}
+	  order by ii.item_img_id asc
+  </select>
+  
+  <select id="findWish" resultMap="marketMap" parameterType="int">
+    SELECT 
+		  i.item_id,
+		  i.item_name,
+		  i.item_cost,
+		  i.trans_state,
+		  i.view_cnt,
+		  c.city_name,
+		  r.region_name,
+		  ii.item_img_id,
+		  ii.file_path 
+		FROM item_like il
+		LEFT JOIN item i
+		  ON il.item_id = i.item_id
+		LEFT JOIN city c  
+		  ON i.city_id = c.city_id 
+		LEFT JOIN region r 
+		  ON c.region_id = r.region_id
+		LEFT JOIN item_img ii 
+		  ON i.item_id = ii.item_id
+		WHERE il.user_id = #{userId}
+       
+  </select>
+  
+  <insert id="insert" parameterType="Market" useGeneratedKeys="true" keyColumn="item_id" keyProperty="itemId">
+    insert into item(user_id,city_id,item_name,item_cost,content)
+      values(#{writer.userId},(select city_id from city
+        WHERE region_id  = (select region_id from region where region_name=#{regionName}) 
+        AND city_name =#{cityName}),#{itemName},#{itemCost},#{content})
+  </insert>
+  
+  <update id="updateState" parameterType="Market">
+    update item set 
+      trans_state=#{transState}
+    where 
+      item_id=#{itemId} and user_id=#{writer.userId}
+  </update>
+  
+  <update id="update" parameterType="Market">
+    update item set 
+      city_id=(select city_id from city where region_id=(select region_id from region where region_name=#{regionName}) and city_name=#{cityName}),
+      item_cost=#{itemCost},
+      item_name=#{itemName},
+      content=#{content}
+    where 
+      user_id=#{writer.userId} and item_id=#{itemId}
+  </update>
+  
+  <delete id="delete" parameterType="Market">
+    delete from item
+    where item_id=#{itemId} and user_id=#{writer.userId}
+  </delete>
+  
+  <update id="increaseViewCount" parameterType="int">
+    update item set
+      view_cnt=view_cnt + 1 
+    where item_id=#{no}
+  </update>
+  
+  <select id="countAll" resultType="int">
+    select count(*) from ml_board
+  </select>
+  
+  
+  
+</mapper>

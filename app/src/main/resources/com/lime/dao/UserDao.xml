@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lime.dao.UserDao">
+
+    <resultMap type="user" id="userMap">
+    </resultMap>
+
+    <insert id="insert" parameterType="user">
+        INSERT INTO user(name, email, password)
+        VALUES      (#{name}, #{email}, #{password})
+    </insert>
+
+    <select id="findByEmailAndPassword" resultMap="userMap">
+        SELECT u.user_id,
+               u.email,
+               u.name,
+               u.phone_no,
+               u.user_img,
+               u.user_type
+        FROM   `user` u
+        where  email=#{email} and u.pwd =#{password}
+    </select>
+
+    <select id="findByEmail" resultMap="userMap" parameterType="string">
+        SELECT user_id,
+               name,
+               email
+        FROM   user
+        WHERE  email = #{email}
+    </select>
+
+    <update id="update" parameterType="user">
+        UPDATE `member` m
+        SET    m.lv_id = #{lvId},
+               m.manner_score = #{mannerScore}
+        WHERE  user_id = #{userId}
+    </update>
+
+
+</mapper>
+
+
+
+
+
+
+
+

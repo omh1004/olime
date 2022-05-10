@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lime.dao.CityDao">
+
+    <resultMap type="City" id="cityMap">
+        <id column="city_id" property="cityId"/>
+        <result column="city_name" property="cityName"/>
+        <result column="lat" property="cityLat"/>
+        <result column="lng" property="cityLng"/>
+        <association property="region" javaType="region">
+            <id column="region_id" property="regionId"/>
+            <result column="region_name" property="regionName"/>
+            <result column="lat" property="regionLat"/>
+            <result column="lng" property="regionLng"/>
+        </association>
+    </resultMap>
+
+    <select id="findRegion" resultMap="cityMap" parameterType="int">
+        SELECT region_id, lat, lng, region_name
+        FROM   region
+        WHERE  region_id=#{regionId}
+    </select>
+
+    <select id="findCity" resultMap="cityMap">
+        SELECT    c.city_id,
+                  c.lat,
+                  c.lng,
+                  c.city_name,
+                  r.region_name,
+                  r.region_id
+        FROM      city c
+        LEFT JOIN region r
+        ON        c.region_id=r.region_id
+        WHERE     c.city_name=#{cityName}
+        AND       r.region_id=#{regionId};
+    </select>
+
+
+
+
+
+
+
+
+</mapper>
